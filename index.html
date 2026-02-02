@@ -3,395 +3,1136 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CyberNews MN — Threat Intelligence төв</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>CyberNews MN — Зөвлөмж & Гарын авлага</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      font-family:'Inter',sans-serif;
-      background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);
-      color:#e2e8f0;
-      min-height:100vh;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #e2e8f0;
+      min-height: 100vh;
     }
 
     /* Header */
-    .header{
-      position:sticky;top:0;z-index:1000;
-      background:rgba(15,23,42,.95);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid rgba(148,163,184,.12);
+    .header {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+      padding: 1.25rem 0;
+      position: sticky; top: 0; z-index: 1000;
     }
-    .header-content{
-      max-width:1400px;margin:auto;padding:1.2rem 2rem;
-      display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
     }
-    .logo{display:flex;align-items:center;gap:1rem}
-    .logo-icon{
-      width:40px;height:40px;border-radius:10px;
-      background:linear-gradient(135deg,#ef4444,#f97316);
-      display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+    .logo { display: flex; align-items: center; gap: 1rem; }
+    .logo-icon {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      flex: 0 0 auto;
     }
-    .logo-text h1{
-      font-size:1.25rem;font-weight:900;
-      background:linear-gradient(135deg,#ef4444,#f97316);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    .logo-text h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
     }
-    .logo-text p{font-size:.85rem;color:#94a3b8}
+    .logo-text p { font-size: 0.85rem; color: #94a3b8; }
 
-    .nav{display:flex;gap:.5rem;flex-wrap:wrap}
-    .nav a{
-      text-decoration:none;color:#cbd5e1;
-      padding:.5rem .9rem;border-radius:10px;
-      border:1px solid rgba(148,163,184,.15);
-      background:rgba(15,23,42,.45);
-      font-size:.9rem;
+    .nav {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
     }
-    .nav a.active{
-      background:linear-gradient(135deg,#ef4444,#f97316);
-      color:#fff;border:none;
+    .nav a {
+      text-decoration: none;
+      color: #cbd5e1;
+      padding: 0.5rem 0.9rem;
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.15);
+      background: rgba(15,23,42,0.45);
+      transition: all .25s;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    .nav a:hover {
+      border-color: rgba(59,130,246,0.35);
+      background: rgba(59,130,246,0.12);
+      transform: translateY(-1px);
+    }
+    .nav a.active {
+      border-color: transparent;
+      background: linear-gradient(135deg, rgba(59,130,246,0.9), rgba(139,92,246,0.9));
+      color: white;
     }
 
-    .btn{
-      padding:.55rem 1rem;border-radius:10px;
-      border:1px solid rgba(148,163,184,.18);
-      background:rgba(15,23,42,.45);
-      color:#e2e8f0;cursor:pointer;font-weight:700;
+    .header-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+
+    .btn {
+      padding: 0.55rem 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.18);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.25s;
+      user-select: none;
+      background: rgba(15, 23, 42, 0.45);
+      color: #e2e8f0;
     }
-    .btn-primary{
-      border:none;
-      background:linear-gradient(135deg,#ef4444,#f97316);
-      color:#fff;
+    .btn:hover { transform: translateY(-2px); border-color: rgba(59,130,246,0.35); background: rgba(59,130,246,0.12); }
+    .btn-primary {
+      border: none;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
     }
+    .btn-primary:hover { box-shadow: 0 14px 30px rgba(59,130,246,0.28); background: linear-gradient(135deg, #2563eb, #7c3aed); }
 
     /* Layout */
-    .container{max-width:1400px;margin:auto;padding:2.2rem 2rem}
+    .container { max-width: 1400px; margin: 0 auto; padding: 2.25rem 2rem; }
 
-    .hero{
-      background:rgba(30,41,59,.55);
-      border:1px solid rgba(148,163,184,.12);
-      border-radius:18px;
-      padding:1.5rem;
-      margin-bottom:1.25rem;
+    .hero {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      align-items: stretch;
     }
-    .hero h2{font-size:1.6rem;margin-bottom:.4rem}
-    .hero p{color:#cbd5e1;line-height:1.6}
+    .hero-card {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 18px;
+      padding: 1.75rem;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: -40% -20%;
+      background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.18), transparent 45%),
+                  radial-gradient(circle at 70% 70%, rgba(139,92,246,0.16), transparent 45%);
+      pointer-events: none;
+      filter: blur(2px);
+    }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .hero p { color: #cbd5e1; line-height: 1.6; max-width: 72ch; }
+    .hero-kpis {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 0.75rem;
+      margin-top: 1.1rem;
+    }
+    .kpi {
+      background: rgba(15,23,42,0.55);
+      border: 1px solid rgba(148,163,184,0.12);
+      border-radius: 14px;
+      padding: 0.9rem;
+    }
+    .kpi .label { color: #94a3b8; font-size: 0.8rem; }
+    .kpi .value { font-size: 1.25rem; font-weight: 800; margin-top: 0.2rem; }
 
-    .kpis{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:.75rem;
-      margin-top:1rem;
+    .quick-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      height: 100%;
+      justify-content: space-between;
     }
-    .kpi{
-      background:rgba(15,23,42,.55);
-      border:1px solid rgba(148,163,184,.12);
-      border-radius:14px;
-      padding:.9rem;
+    .qa {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 18px;
+      padding: 1.2rem;
+      backdrop-filter: blur(10px);
     }
-    .kpi .label{font-size:.8rem;color:#94a3b8}
-    .kpi .value{font-size:1.3rem;font-weight:900}
+    .qa h3 { font-size: 1.05rem; margin-bottom: 0.35rem; }
+    .qa p { color: #cbd5e1; font-size: 0.92rem; line-height: 1.5; margin-bottom: 0.8rem; }
 
-    /* Search */
-    .search{
-      background:rgba(30,41,59,.55);
-      border:1px solid rgba(148,163,184,.12);
-      border-radius:18px;
-      padding:1.4rem;
-      margin:1.2rem 0;
+    /* Search & Filters */
+    .search-section {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 18px;
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+      margin: 1.25rem 0 1.75rem;
     }
-    .search-row{display:flex;gap:.75rem;flex-wrap:wrap}
-    .search input{
-      flex:1;min-width:260px;
-      padding:.9rem 1.1rem;
-      background:rgba(15,23,42,.8);
-      border:1px solid rgba(148,163,184,.22);
-      border-radius:14px;
-      color:#e2e8f0;
+    .search-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
     }
-
-    .chips{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.8rem}
-    .chip{
-      padding:.4rem .85rem;border-radius:999px;
-      border:1px solid rgba(148,163,184,.2);
-      background:rgba(15,23,42,.55);
-      cursor:pointer;font-size:.85rem;
+    .search-input {
+      flex: 1;
+      min-width: 240px;
+      padding: 0.95rem 1.1rem;
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 14px;
+      color: #e2e8f0;
+      font-size: 1rem;
     }
-    .chip.active{
-      background:linear-gradient(135deg,#ef4444,#f97316);
-      border:none;color:#fff;
+    .search-input:focus { outline: none; border-color: rgba(59,130,246,0.65); }
+    .chips {
+      display: flex;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      margin-top: 0.9rem;
+      user-select: none;
+    }
+    .chip {
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      background: rgba(15, 23, 42, 0.55);
+      cursor: pointer;
+      transition: all .25s;
+      font-size: 0.86rem;
+      color: #cbd5e1;
+    }
+    .chip:hover { transform: translateY(-1px); border-color: rgba(59,130,246,0.35); background: rgba(59,130,246,0.12); }
+    .chip.active {
+      color: white;
+      border-color: transparent;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
     }
 
     /* Grid */
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
-      gap:1rem;
-    }
-    .card{
-      background:rgba(30,41,59,.55);
-      border:1px solid rgba(148,163,184,.12);
-      border-radius:18px;
-      overflow:hidden;
-      cursor:pointer;
-    }
-    .card:hover{border-color:rgba(239,68,68,.4)}
+    .section-header { display: flex; align-items: center; gap: 0.75rem; margin: 1.6rem 0 1rem; }
+    .section-header h2 { font-size: 1.4rem; }
+    .section-icon { font-size: 1.25rem; }
 
-    .card-top{
-      padding:.8rem 1rem;
-      background:linear-gradient(135deg,rgba(239,68,68,.25),rgba(249,115,22,.18));
-      display:flex;gap:.4rem;flex-wrap:wrap;
-    }
-    .tag{
-      font-size:.72rem;
-      padding:.25rem .6rem;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,.25);
-      background:rgba(15,23,42,.45);
-    }
-    .tag.red{color:#fecaca;border-color:rgba(239,68,68,.4)}
-    .tag.orange{color:#fdba74;border-color:rgba(249,115,22,.4)}
-    .tag.blue{color:#bfdbfe;border-color:rgba(59,130,246,.4)}
-
-    .card-body{padding:1rem}
-    .card-title{font-size:1.05rem;font-weight:900;margin-bottom:.3rem}
-    .card-desc{font-size:.9rem;color:#cbd5e1;line-height:1.5}
-    .meta{
-      margin-top:.7rem;
-      font-size:.82rem;
-      color:#94a3b8;
-      display:flex;justify-content:space-between;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
     }
 
-    /* Drawer */
-    .drawer{
-      position:fixed;inset:0;
-      background:rgba(0,0,0,.82);
-      display:none;z-index:3000;
-      justify-content:center;align-items:flex-start;
-      padding:2rem 1rem;
+    .card {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: all 0.25s;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      position: relative;
     }
-    .drawer.active{display:flex}
-    .drawer-inner{
-      background:rgba(30,41,59,.95);
-      border:1px solid rgba(148,163,184,.2);
-      border-radius:18px;
-      max-width:1000px;width:100%;
-      padding:1.6rem;
-      position:relative;
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59,130,246,0.35);
+      box-shadow: 0 18px 38px rgba(0,0,0,0.28);
     }
-    .close{
-      position:absolute;top:1rem;right:1rem;
-      width:40px;height:40px;border-radius:50%;
-      border:none;background:rgba(239,68,68,.25);
-      color:#fff;font-size:1.4rem;cursor:pointer;
+    .cover {
+      height: 140px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.18), rgba(139,92,246,0.16));
+      display: flex;
+      align-items: flex-end;
+      padding: 0.9rem 1rem;
     }
-    .block{
-      background:rgba(15,23,42,.55);
-      border:1px solid rgba(148,163,184,.12);
-      border-radius:14px;
-      padding:1.1rem;
-      margin-top:1rem;
+    .tag-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.18);
+      background: rgba(15,23,42,0.45);
+      color: #e2e8f0;
     }
-    .block h3{margin-bottom:.6rem;color:#f87171}
-    .mono{
-      font-family:monospace;
-      background:#020617;
-      padding:.8rem;
-      border-radius:10px;
-      white-space:pre-wrap;
+    .tag.level-low { border-color: rgba(34,197,94,0.35); color: #86efac; background: rgba(34,197,94,0.12); }
+    .tag.level-med { border-color: rgba(249,115,22,0.35); color: #fdba74; background: rgba(249,115,22,0.12); }
+    .tag.level-high{ border-color: rgba(239,68,68,0.35); color: #fca5a5; background: rgba(239,68,68,0.12); }
+
+    .content { padding: 1rem 1.1rem 1.1rem; }
+    .title { font-size: 1.1rem; font-weight: 800; line-height: 1.35; margin-bottom: 0.45rem; }
+    .desc { color: #cbd5e1; font-size: 0.92rem; line-height: 1.55; margin-bottom: 0.85rem; }
+    .meta { display: flex; justify-content: space-between; gap: 0.75rem; color: #94a3b8; font-size: 0.86rem; flex-wrap: wrap; }
+    .meta span { display: inline-flex; align-items: center; gap: 0.35rem; }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.82);
+      z-index: 3000;
+      overflow-y: auto;
+      padding: 2rem 1rem;
+    }
+    .modal.active { display: flex; justify-content: center; align-items: flex-start; }
+    .modal-inner {
+      width: 100%;
+      max-width: 980px;
+      background: rgba(30, 41, 59, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 18px;
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+      position: relative;
+      margin: 1rem auto 2rem;
+    }
+    .modal-top {
+      padding: 1.6rem 1.6rem 1.1rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    }
+    .close {
+      position: absolute;
+      top: 1.1rem;
+      right: 1.1rem;
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      font-size: 1.4rem;
+      background: rgba(239,68,68,0.18);
+      color: #fca5a5;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+    }
+    .close:hover { background: rgba(239,68,68,0.35); transform: scale(1.03); }
+
+    .modal-title { font-size: 1.75rem; line-height: 1.2; margin-bottom: 0.7rem; }
+    .modal-submeta { display: flex; gap: 0.65rem; flex-wrap: wrap; color: #94a3b8; font-size: 0.9rem; }
+    .pill {
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.18);
+      background: rgba(15,23,42,0.45);
+      color: #cbd5e1;
+      display: inline-flex; gap: 0.35rem; align-items: center;
     }
 
-    @media(max-width:768px){
-      .container{padding:1.5rem 1rem}
-      .kpis{grid-template-columns:repeat(2,1fr)}
+    .modal-body { padding: 1.6rem; }
+    .block {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 1.1rem;
+    }
+    .block h3 { margin-bottom: 0.75rem; color: #60a5fa; display: flex; align-items: center; gap: 0.5rem; }
+    .block p { color: #cbd5e1; line-height: 1.75; margin-bottom: 0.7rem; }
+    .block ul { padding-left: 1.2rem; color: #cbd5e1; }
+    .block li { margin: 0.35rem 0; line-height: 1.6; }
+
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-top: 0.5rem;
+    }
+    .check-item {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+      background: rgba(30,41,59,0.6);
+      border: 1px solid rgba(148,163,184,0.12);
+      border-radius: 14px;
+      padding: 0.85rem 0.9rem;
+    }
+    .check-item input { margin-top: 0.15rem; width: 18px; height: 18px; accent-color: #3b82f6; }
+    .check-item .txt { flex: 1; color: #e2e8f0; line-height: 1.55; }
+    .check-actions {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-top: 0.9rem;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 1.2rem;
+      transform: translateX(-50%);
+      padding: 0.75rem 1rem;
+      background: rgba(15,23,42,0.92);
+      border: 1px solid rgba(148,163,184,0.18);
+      border-radius: 999px;
+      color: #e2e8f0;
+      z-index: 5000;
+      display: none;
+      gap: 0.5rem;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      user-select: none;
+    }
+    .toast.show { display: inline-flex; }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-kpis { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width: 768px) {
+      .container { padding: 1.5rem 1rem; }
+      .header-content { padding: 0 1rem; }
+      .grid { grid-template-columns: 1fr; }
+      .hero-kpis { grid-template-columns: 1fr; }
+      .btn { width: auto; }
     }
   </style>
 </head>
 
 <body>
-<header class="header">
-  <div class="header-content">
-    <div class="logo">
-      <div class="logo-icon">🎯</div>
-      <div class="logo-text">
-        <h1>CyberNews MN</h1>
-        <p>Threat Intelligence төв</p>
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">📚</div>
+        <div class="logo-text">
+          <h1>CyberNews MN</h1>
+          <p>Зөвлөмж & Гарын авлага</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary Navigation">
+        <a href="./index.html">📰 Мэдээ</a>
+        <a href="./guides.html" class="active">📚 Зөвлөмж</a>
+        <!-- хүсвэл нэмнэ: <a href="./cve.html">🔓 CVE</a> <a href="./threat.html">🎯 Threat</a> -->
+      </nav>
+
+      <div class="header-actions">
+        <button class="btn" onclick="openBookmarks()">⭐ Bookmarks</button>
+        <button class="btn btn-primary" onclick="scrollToFilters()">🔍 Хайлт</button>
       </div>
     </div>
+  </header>
 
-    <nav class="nav">
-      <a href="./index.html">📰 Мэдээ</a>
-      <a href="./cve.html">🔓 CVE төв</a>
-      <a href="./threat.html" class="active">🎯 Threat төв</a>
-    </nav>
+  <div class="container">
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-card">
+        <div class="hero-inner">
+          <h2>Байгууллагад хэрэгтэй кибер хамгаалалтын практик гарын авлага</h2>
+          <p>
+            Энэ хуудсанд MFA хэрэгжүүлэх, нөөцлөлт, patch management, phishing хамгаалалт, incident response,
+            лог менежмент зэрэг байгууллагын бодит хэрэгжүүлэлтэд зориулсан “үйлдэл-д чиглэсэн” зөвлөмжүүдийг нэгтгэнэ.
+          </p>
 
-    <div>
-      <button class="btn" onclick="exportCSV()">⬇️ Export</button>
-    </div>
-  </div>
-</header>
-
-<div class="container">
-  <div class="hero">
-    <h2>Threat Intelligence төв</h2>
-    <p>
-      APT бүлэг, malware, идэвхтэй халдлагын кампанит ажлуудыг нэг дороос
-      хянаж, SOC / CERT түвшинд шууд ашиглах боломжтой.
-    </p>
-
-    <div class="kpis">
-      <div class="kpi"><div class="label">Нийт Threat</div><div class="value" id="kTotal">0</div></div>
-      <div class="kpi"><div class="label">Active</div><div class="value" id="kActive">0</div></div>
-      <div class="kpi"><div class="label">APT</div><div class="value" id="kAPT">0</div></div>
-      <div class="kpi"><div class="label">Malware</div><div class="value" id="kMalware">0</div></div>
-    </div>
-  </div>
-
-  <div class="search">
-    <div class="search-row">
-      <input id="q" placeholder="APT / Malware / IOC / тайлбар хайх…">
-      <button class="btn-primary btn" onclick="render()">Хайх</button>
-    </div>
-
-    <div class="chips">
-      <div class="chip active" onclick="setFilter('all')">🔥 All</div>
-      <div class="chip" onclick="setFilter('apt')">🎭 APT</div>
-      <div class="chip" onclick="setFilter('malware')">🦠 Malware</div>
-      <div class="chip" onclick="setFilter('campaign')">⚔️ Campaign</div>
-      <div class="chip" onclick="setFilter('active')">🚨 Active</div>
-    </div>
-  </div>
-
-  <div class="grid" id="grid"></div>
-</div>
-
-<!-- Drawer -->
-<div class="drawer" id="drawer">
-  <div class="drawer-inner">
-    <button class="close" onclick="closeDrawer()">×</button>
-    <div id="drawerBody"></div>
-  </div>
-</div>
-
-<script>
-const threats = [
-  {
-    id:"APT29",
-    type:"apt",
-    active:true,
-    severity:"high",
-    title:"APT29 (Cozy Bear)",
-    desc:"Засгийн газар, дипломат салбарыг онилсон phishing ба backdoor халдлагууд.",
-    iocs:["185.86.151.11","cozy-update[.]com","d41d8cd98f00b204e9800998ecf8427e"],
-    mitigations:["MFA","Email gateway rules","EDR IOC scan"]
-  },
-  {
-    id:"Emotet",
-    type:"malware",
-    active:false,
-    severity:"medium",
-    title:"Emotet Malware",
-    desc:"Email-based malware loader, botnet infrastructure.",
-    iocs:["91.92.240.12","invoice-doc[.]net"],
-    mitigations:["Block macros","Email filtering","Network IOC blocking"]
-  },
-  {
-    id:"Volt Typhoon",
-    type:"campaign",
-    active:true,
-    severity:"critical",
-    title:"Volt Typhoon Campaign",
-    desc:"Critical infrastructure targeting, living-off-the-land techniques.",
-    iocs:["vpn-update[.]org","103.27.203.44"],
-    mitigations:["Log review","Admin credential rotation","Network segmentation"]
-  }
-];
-
-let filter="all";
-
-function setFilter(f){
-  filter=f;
-  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-  event.target.classList.add('active');
-  render();
-}
-
-function render(){
-  const q=(document.getElementById('q').value||"").toLowerCase();
-  let list=[...threats];
-
-  if(filter==="apt") list=list.filter(x=>x.type==="apt");
-  if(filter==="malware") list=list.filter(x=>x.type==="malware");
-  if(filter==="campaign") list=list.filter(x=>x.type==="campaign");
-  if(filter==="active") list=list.filter(x=>x.active);
-
-  list=list.filter(x=>
-    x.title.toLowerCase().includes(q) ||
-    x.desc.toLowerCase().includes(q) ||
-    x.iocs.join(" ").toLowerCase().includes(q)
-  );
-
-  document.getElementById('kTotal').textContent=threats.length;
-  document.getElementById('kActive').textContent=threats.filter(x=>x.active).length;
-  document.getElementById('kAPT').textContent=threats.filter(x=>x.type==="apt").length;
-  document.getElementById('kMalware').textContent=threats.filter(x=>x.type==="malware").length;
-
-  const grid=document.getElementById('grid');
-  grid.innerHTML=list.map(t=>`
-    <div class="card" onclick="openThreat('${t.id}')">
-      <div class="card-top">
-        <span class="tag ${t.severity==='critical'?'red':'orange'}">${t.severity.toUpperCase()}</span>
-        <span class="tag blue">${t.type.toUpperCase()}</span>
-        ${t.active?'<span class="tag red">ACTIVE</span>':''}
+          <div class="hero-kpis" aria-label="Guide KPIs">
+            <div class="kpi">
+              <div class="label">Нийт гарын авлага</div>
+              <div class="value" id="kpiTotal">0</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Өндөр эрсдэл (High)</div>
+              <div class="value" id="kpiHigh">0</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Bookmarks</div>
+              <div class="value" id="kpiBookmarks">0</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="card-body">
-        <div class="card-title">${t.title}</div>
-        <div class="card-desc">${t.desc}</div>
-        <div class="meta">
-          <span>IOC: ${t.iocs.length}</span>
-          <span>${t.active?'🚨 Идэвхтэй':'— Archived'}</span>
+
+      <div class="quick-actions">
+        <div class="qa">
+          <h3>🚀 Шуурхай checklist</h3>
+          <p>Хамгийн түгээмэл хамгаалалтын алхмуудыг нэг дороос “copy” хийж ав.</p>
+          <button class="btn btn-primary" onclick="openGuide(quickGuideId)">Нээх</button>
+        </div>
+
+        <div class="qa">
+          <h3>🧭 Байгууллагын түвшин сонгох</h3>
+          <p>“Эхлэх / Дунд / Ахисан” төвшнөөр шүүж харж болно.</p>
+          <button class="btn" onclick="setChip('level','starter')">Starter</button>
+          <button class="btn" onclick="setChip('level','intermediate')" style="margin-left:.4rem;">Intermediate</button>
+          <button class="btn" onclick="setChip('level','advanced')" style="margin-left:.4rem;">Advanced</button>
         </div>
       </div>
     </div>
-  `).join("") || "<p style='color:#94a3b8'>Threat олдсонгүй</p>";
-}
 
-function openThreat(id){
-  const t=threats.find(x=>x.id===id);
-  document.getElementById('drawerBody').innerHTML=`
-    <h2>${t.title}</h2>
-    <p style="color:#cbd5e1">${t.desc}</p>
+    <!-- SEARCH -->
+    <div class="search-section" id="filters">
+      <div class="search-row">
+        <input id="q" class="search-input" placeholder="🔍 Гарчиг/тайлбар/контент хайх..." />
+        <button class="btn btn-primary" onclick="applySearch()">Хайх</button>
+        <button class="btn" onclick="resetAll()">Цэвэрлэх</button>
+      </div>
 
-    <div class="block">
-      <h3>📌 Indicators of Compromise</h3>
-      <div class="mono">${t.iocs.join("\n")}</div>
+      <div class="chips" aria-label="Filters">
+        <div class="chip active" data-chip="cat:all" onclick="setChip('cat','all')">🔥 Бүгд</div>
+        <div class="chip" data-chip="cat:mfa" onclick="setChip('cat','mfa')">🔐 MFA</div>
+        <div class="chip" data-chip="cat:backup" onclick="setChip('cat','backup')">💾 Backup</div>
+        <div class="chip" data-chip="cat:patch" onclick="setChip('cat','patch')">🧩 Patch</div>
+        <div class="chip" data-chip="cat:phishing" onclick="setChip('cat','phishing')">🎣 Phishing</div>
+        <div class="chip" data-chip="cat:incident" onclick="setChip('cat','incident')">🚨 Incident</div>
+        <div class="chip" data-chip="cat:logging" onclick="setChip('cat','logging')">🧾 Logging</div>
+        <div class="chip" data-chip="cat:policy" onclick="setChip('cat','policy')">📜 Policy</div>
+        <div class="chip" data-chip="cat:cloud" onclick="setChip('cat','cloud')">☁️ Cloud</div>
+
+        <div style="flex-basis:100%; height:0;"></div>
+
+        <div class="chip" data-chip="level:starter" onclick="setChip('level','starter')">🟢 Starter</div>
+        <div class="chip" data-chip="level:intermediate" onclick="setChip('level','intermediate')">🟠 Intermediate</div>
+        <div class="chip" data-chip="level:advanced" onclick="setChip('level','advanced')">🔴 Advanced</div>
+        <div class="chip" data-chip="level:all" onclick="setChip('level','all')">✨ Level: All</div>
+
+        <div class="chip" data-chip="risk:low" onclick="setChip('risk','low')">✅ Risk: Low</div>
+        <div class="chip" data-chip="risk:med" onclick="setChip('risk','med')">⚠️ Risk: Medium</div>
+        <div class="chip" data-chip="risk:high" onclick="setChip('risk','high')">🛑 Risk: High</div>
+        <div class="chip" data-chip="risk:all" onclick="setChip('risk','all')">✨ Risk: All</div>
+
+        <div class="chip" data-chip="bm:only" onclick="setChip('bm','only')">⭐ Bookmarked</div>
+        <div class="chip" data-chip="bm:all" onclick="setChip('bm','all')">✨ Bookmark: All</div>
+      </div>
     </div>
 
-    <div class="block">
-      <h3>🛡️ Mitigations</h3>
-      <ul>${t.mitigations.map(m=>`<li>${m}</li>`).join("")}</ul>
+    <div class="section-header">
+      <span class="section-icon">📚</span>
+      <h2>Гарын авлагууд</h2>
     </div>
-  `;
-  document.getElementById('drawer').classList.add('active');
-}
+    <div class="grid" id="grid"></div>
+  </div>
 
-function closeDrawer(){
-  document.getElementById('drawer').classList.remove('active');
-}
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+    <div class="modal-inner" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+      <button class="close" onclick="closeModal()" aria-label="Close">×</button>
+      <div class="modal-top" id="modalTop"></div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
 
-function exportCSV(){
-  const rows=threats.map(t=>`${t.id},${t.type},${t.severity},${t.active}`);
-  const csv="id,type,severity,active\n"+rows.join("\n");
-  const blob=new Blob([csv],{type:"text/csv"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download="threat_export.csv";
-  a.click();
-}
+  <div class="toast" id="toast">✅ <span id="toastText">Хуулагдлаа</span></div>
 
-render();
-</script>
+  <script>
+    // ---------- Helpers ----------
+    function escapeHTML(str = '') {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+    function stripHTML(html = '') {
+      const div = document.createElement('div');
+      div.innerHTML = String(html);
+      return (div.textContent || div.innerText || '').toString();
+    }
+    function toast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastText').textContent = msg;
+      t.classList.add('show');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+    }
+    function uniq(arr) { return Array.from(new Set(arr)); }
+    function byDateDesc(a,b){ return new Date(b.updatedAt) - new Date(a.updatedAt); }
+
+    // ---------- Data ----------
+    const guides = [
+      {
+        id: "g-mfa-10",
+        cat: "mfa",
+        level: "starter",
+        risk: "high",
+        title: "Multi-Factor Authentication (MFA) хэрэгжүүлэх 10 алхам",
+        desc: "Нэвтрэлтийн эрсдэлийг огцом бууруулдаг хамгийн үр дүнтэй хамгаалалт. Алхам алхмаар хэрэгжүүлэх төлөвлөгөө, backup арга, rollout зөвлөмж.",
+        updatedAt: "2025-01-25",
+        duration: "12 мин",
+        outcomes: ["Account takeover эрсдэл буурна", "Admin account хамгаалалт сайжирна", "Audit trail илүү тод болно"],
+        contentHTML: `
+          <p><b>MFA</b> нь нэвтрэх үед 2 ба түүнээс дээш баталгаажуулалтын хүчин зүйл шаардах механизмыг хэлнэ (password + app code гэх мэт).</p>
+          <p>Байгууллага дээр хэрэгжүүлэхдээ <b>алхамчилсан rollout</b> болон <b>backup access</b> загвар зайлшгүй шаардлагатай.</p>
+        `,
+        checklist: [
+          "Админ/Privileged account-уудыг эхэлж MFA-д хамруулах",
+          "Байгууллагын хэрэглэгчийн бүлэг, IAM/SSO боломжоо тодорхойлох",
+          "MFA арга (Authenticator app, FIDO2 key, SMS) сонгох — SMS-ийг хамгийн сүүлд сонго",
+          "Pilot хэрэглэгчийн бүлэг сонгож 1–2 долоо хоног турших",
+          "Recovery codes/backup token процесс боловсруулах",
+          "Conditional access бодлого (гео, device, risk-based) тохируулах",
+          "Rollout-г хэлтэс/бүлгээр үе шаттай өргөжүүлэх",
+          "MFA bypass хүсэлтийн workflow (helpdesk) гаргах",
+          "Нэвтрэлтийн лог, failed login alert идэвхжүүлэх",
+          "Сар бүр KPI (MFA adoption %, bypass count) хянах"
+        ],
+        tips: [
+          "Admin account-ууд дээр FIDO2 key ашиглавал phishing-д илүү тэсвэртэй.",
+          "MFA rollout үед support ачаалал ихэсдэг — helpdesk SOP бэлтгэ."
+        ]
+      },
+      {
+        id: "g-backup-321",
+        cat: "backup",
+        level: "starter",
+        risk: "high",
+        title: "3-2-1 Backup стратеги: өгөгдлөө алдахаас хамгаалах",
+        desc: "Кибер халдлага/санамсаргүй устгал/гамшгийн үед хурдан сэргээх үндсэн загвар. Cloud + offline backup болон тестийн давтамж.",
+        updatedAt: "2025-01-20",
+        duration: "10 мин",
+        outcomes: ["Ransomware үед сэргээх боломж нэмэгдэнэ", "DR бэлэн байдал сайжирна"],
+        contentHTML: `
+          <p><b>3-2-1</b> гэдэг нь: (1) өгөгдлийн <b>3</b> хуулбар, (2) <b>2</b> өөр төрлийн storage, (3) <b>1</b> нь offsite байх.</p>
+          <p>Backup хийхээс гадна <b>restore test</b> хийхгүй бол backup “байхгүйтэй адил”.</p>
+        `,
+        checklist: [
+          "Critical өгөгдлийн жагсаалт (Tier 0/1/2) гаргах",
+          "RPO/RTO зорилтууд тогтоох (ж: RPO=24h, RTO=8h)",
+          "3-2-1 загвараар storage сонгох (cloud + NAS + offline гэх мэт)",
+          "Immutable/Versioning тохиргоо хийх (ransomware хамгаалалт)",
+          "Backup schedule (daily/weekly/monthly) тохируулах",
+          "Encryption + access control (backup admin тусгаарлах)",
+          "Restore test — сард 1 удаа заавал хийх",
+          "Backup monitoring + alert идэвхжүүлэх",
+          "DR runbook бичих (хэн, хэзээ, яаж сэргээх)",
+          "Жилд 1 удаа tabletop exercise хийх"
+        ],
+        tips: [
+          "Backup системийг domain admin-оос тусгаарласан account-аар удирд.",
+          "Restore test-ийг “бодит” дата дээр бага хэмжээгээр ч гэсэн хий."
+        ]
+      },
+      {
+        id: "g-patch-weekly",
+        cat: "patch",
+        level: "intermediate",
+        risk: "high",
+        title: "Patch Management: 7 хоногийн циклээр эмзэг байдлыг хаах",
+        desc: "Asset inventory → scanning → prioritization → rollout → validation гэсэн бодит процесс. KEV/EPSS ашиглаж эрэмбэлэх санаа.",
+        updatedAt: "2025-01-18",
+        duration: "14 мин",
+        outcomes: ["Эмзэг байдлын цонх багасна", "Change mgmt сахилга сайжирна"],
+        contentHTML: `
+          <p>Patch management бол “суулгах” биш, <b>процесс</b>. Гол нь эрэмбэлэлт ба баталгаажуулалт.</p>
+          <p>KEV (идэвхтэй ашиглагддаг) + CVSS/EPSS (магадлал/impact) гэдгээр приорити тогтоовол үр дүн өндөр.</p>
+        `,
+        checklist: [
+          "Asset inventory (OS/App/Version) шинэчлэх",
+          "Vulnerability scan хуваарь тогтоох (weekly)",
+          "Prioritization: KEV → Internet-facing → CVSS/EPSS",
+          "Patch window + change approval workflow",
+          "Pilot group дээр суулгаж 24–48h ажиглах",
+          "Production rollout (segment-by-segment)",
+          "Rollback plan + backup readiness",
+          "Post-patch validation (scan + service health)",
+          "Metrics: patch latency, failure rate, exceptions",
+          "Exception registry (яагаад суулгахгүй байгааг бичгээр)"
+        ],
+        tips: [
+          "Internet-facing системийг тусдаа patch lane болго.",
+          "Exception (суулгах боломжгүй) бол compensating control заавал тавь."
+        ]
+      },
+      {
+        id: "g-phishing-playbook",
+        cat: "phishing",
+        level: "starter",
+        risk: "med",
+        title: "Phishing хамгаалалт: Email + хэрэглэгчийн дадал + response playbook",
+        desc: "DMARC/SPF/DKIM суурь, хэрэглэгчийн сургалт, report button, triage урсгал. 1–2 долоо хоногт хэрэгжүүлэхээр.",
+        updatedAt: "2025-01-15",
+        duration: "11 мин",
+        outcomes: ["Spear-phishing амжилт буурна", "Triage хурд нэмэгдэнэ"],
+        contentHTML: `
+          <p>Phishing хамгаалалт 3 давхар: <b>техник</b> (email auth), <b>хүн</b> (awareness), <b>response</b> (playbook).</p>
+        `,
+        checklist: [
+          "SPF/DKIM тохируулах",
+          "DMARC policy-г p=none → quarantine → reject үе шаттай хийх",
+          "External sender banner нэмэх",
+          "Phishing report button (add-in) нэвтрүүлэх",
+          "Triage workflow: header analysis → URL detonation → blocklist",
+          "User awareness: 15 минутын микро сургалт (сард 1)",
+          "Simulated phishing кампанит (улиралд 1)",
+          "Incident үед account reset + session revoke SOP",
+          "IOC-уудыг SIEM/EDR-д feed болгох",
+          "Metrics: report rate, click rate, time-to-triage"
+        ],
+        tips: [
+          "DMARC-г шууд reject хийхээс өмнө тайлангаа (rua) анализ хий.",
+          "Report button хэрэглэгчийн хамгийн том хүч болно."
+        ]
+      },
+      {
+        id: "g-incident-mini",
+        cat: "incident",
+        level: "intermediate",
+        risk: "high",
+        title: "Incident Response Mini-Playbook (1 нүүрээр)",
+        desc: "Detection → Containment → Eradication → Recovery → Lessons learned. Дуудлагын үүрэг, нотолгоо хадгалалт, мэдээлэл дамжуулалт.",
+        updatedAt: "2025-01-12",
+        duration: "9 мин",
+        outcomes: ["MTTR буурна", "Зөрчил давтагдах эрсдэл буурна"],
+        contentHTML: `
+          <p>Инцидентын үед хамгийн том алдаа бол: <b>ямар ч SOPгүй</b> сандрах.</p>
+          <p>Энэ playbook нь 1 нүүрэнд багтах байдлаар багцалсан үндсэн дараалал.</p>
+        `,
+        checklist: [
+          "Инцидентыг ангилж severity тогтоох (S1/S2/S3)",
+          "Containment: network isolate / account disable / block IOC",
+          "Evidence: log snapshot, memory/disk image (боломжтой бол)",
+          "Communication: нэг сувгаар мэдээлэл (war room)",
+          "Eradication: persistence шалгах, credential reset",
+          "Recovery: clean restore, monitoring increase",
+          "Post-incident: RCA бичих, control gap нөхөх",
+          "Legal/PR trigger нөхцөлийг тогтоох",
+          "Ticketing + timeline бүртгэл",
+          "Tabletop exercise (улиралд 1)"
+        ],
+        tips: [
+          "Containment хийхдээ бизнесийн нөлөөллийг тооцоол.",
+          "Evidence-ийг устгахгүй байх нь дараа нь амь аврана."
+        ]
+      },
+      {
+        id: "g-logging-basics",
+        cat: "logging",
+        level: "starter",
+        risk: "med",
+        title: "Лог менежмент: ямар лог цуглуулах вэ?",
+        desc: "Windows/Linux/Firewall/VPN/Email audit логийн минимал багц + retention зөвлөмж. SIEM-д оруулах эрэмбэ.",
+        updatedAt: "2025-01-10",
+        duration: "13 мин",
+        outcomes: ["Илрүүлэлт сайжирна", "Форензик боломж нэмэгдэнэ"],
+        contentHTML: `
+          <p>Лог бол “мэдэхгүй байсан”-аа мэдэх цорын ганц хэрэгсэл. Эхлээд <b>минимал</b> багцаас эхэлж, дараа нь өргөжүүл.</p>
+        `,
+        checklist: [
+          "Identity: SSO/IAM login audit",
+          "Endpoint: EDR/AV alerts",
+          "Email: mailbox rules, login, forwarding",
+          "Network: firewall allow/deny + VPN",
+          "Server: auth log, sudo, service restart",
+          "Time sync (NTP) бүх систем дээр",
+          "Retention: 90–180 хоног (боломжтой бол 1 жил)",
+          "Alerting: failed login spike, impossible travel",
+          "Access control: log admin тусгаарлах",
+          "Log review cadence: weekly"
+        ],
+        tips: [
+          "Цаг синк байхгүй бол логийн анализ утгагүй болно.",
+          "Email forwarding rule нь маш чухал сигнал."
+        ]
+      },
+      {
+        id: "g-policy-min",
+        cat: "policy",
+        level: "starter",
+        risk: "low",
+        title: "Кибер бодлого (минимал багц): байгууллага заавал юу бичих вэ?",
+        desc: "Acceptable Use, Password/MFA, Backup/DR, Incident Response, Asset mgmt зэрэг үндсэн баримт бичгийн жагсаалт.",
+        updatedAt: "2025-01-07",
+        duration: "8 мин",
+        outcomes: ["Дүрэм журам тодорхой болно", "Аудитад бэлэн болно"],
+        contentHTML: `
+          <p>Бодлого бичих зорилго нь “гоё PDF” биш — <b>хариуцлага, процесст</b> тодорхой болгох.</p>
+        `,
+        checklist: [
+          "Acceptable Use policy",
+          "Password + MFA policy",
+          "Backup/DR policy",
+          "Incident Response policy",
+          "Asset inventory / classification",
+          "Access control (least privilege)",
+          "Vendor / third-party access",
+          "Change management (patch 포함)",
+          "Log retention / monitoring policy",
+          "Security awareness program"
+        ],
+        tips: [
+          "Хэт урт бодлого ажиллахгүй. 1–3 нүүрэнд багтаа.",
+          "Policy + procedure + checklist гэж 3 давхар бүтэц зөв."
+        ]
+      },
+      {
+        id: "g-cloud-hardening",
+        cat: "cloud",
+        level: "advanced",
+        risk: "high",
+        title: "Cloud Hardening: IAM + Network + Secrets хамгаалалт",
+        desc: "Public cloud ашиглаж байгаа үед хамгийн түгээмэл алдаа: overly-permissive IAM, exposed storage, leaked keys. Хяналтын жагсаалт.",
+        updatedAt: "2025-01-05",
+        duration: "16 мин",
+        outcomes: ["Key leak impact буурна", "Misconfiguration эрсдэл багасна"],
+        contentHTML: `
+          <p>Cloud дээрх халдлагын ихэнх нь <b>misconfiguration</b> ба <b>identity</b> дээр төвлөрдөг.</p>
+        `,
+        checklist: [
+          "Root/Owner account дээр hardware MFA",
+          "Least privilege IAM roles (deny-by-default)",
+          "Access keys rotation + disable unused keys",
+          "Secrets manager ашиглаж, кодонд key бүү бич",
+          "Public bucket/container access-г шалгах",
+          "Security groups / firewall rule audit (internet exposure)",
+          "Cloud trail/audit logs enable",
+          "Config baseline + drift detection",
+          "WAF + rate limiting (internet-facing)",
+          "Break-glass account тусгаарлах"
+        ],
+        tips: [
+          "Key leak бол 'хэзээ нэг өдөр' биш — 'хэзээ' гэдэг асуудал.",
+          "Cloud audit log-оо өөр тусдаа account/storage руу хадгал."
+        ]
+      }
+    ];
+
+    const quickGuideId = "g-incident-mini";
+
+    // ---------- State ----------
+    const state = {
+      cat: "all",
+      level: "all",
+      risk: "all",
+      bm: "all",
+      q: ""
+    };
+
+    // ---------- Bookmarks ----------
+    const BM_KEY = "cyber_guides_bookmarks_v1";
+    function getBookmarks() {
+      try { return JSON.parse(localStorage.getItem(BM_KEY) || "[]"); }
+      catch { return []; }
+    }
+    function setBookmarks(ids) {
+      localStorage.setItem(BM_KEY, JSON.stringify(uniq(ids)));
+      updateKpis();
+    }
+    function isBookmarked(id) {
+      return getBookmarks().includes(id);
+    }
+    function toggleBookmark(id) {
+      const b = getBookmarks();
+      if (b.includes(id)) setBookmarks(b.filter(x => x !== id));
+      else setBookmarks([...b, id]);
+      render();
+      toast(isBookmarked(id) ? "Bookmark нэмэгдлээ" : "Bookmark устлаа");
+    }
+
+    // ---------- Filters ----------
+    function setChip(group, value) {
+      state[group] = value;
+
+      // highlight chips
+      document.querySelectorAll('.chip').forEach(ch => ch.classList.remove('active'));
+      // always keep cat/all active if cat=all etc
+      const targets = [];
+      targets.push(`cat:${state.cat}`);
+      targets.push(`level:${state.level}`);
+      targets.push(`risk:${state.risk}`);
+      targets.push(`bm:${state.bm}`);
+
+      targets.forEach(t => {
+        const el = document.querySelector(`.chip[data-chip="${t}"]`);
+        if (el) el.classList.add('active');
+      });
+
+      render();
+    }
+
+    function applySearch() {
+      state.q = (document.getElementById('q').value || '').trim().toLowerCase();
+      render();
+    }
+
+    function resetAll() {
+      state.cat = "all";
+      state.level = "all";
+      state.risk = "all";
+      state.bm = "all";
+      state.q = "";
+      document.getElementById('q').value = "";
+      setChip('cat','all');
+      setChip('level','all');
+      setChip('risk','all');
+      setChip('bm','all');
+      render();
+      toast("Шүүлтүүр цэвэрлэгдлээ");
+    }
+
+    function scrollToFilters() {
+      document.getElementById('filters').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function filterList() {
+      let list = [...guides].sort(byDateDesc);
+
+      if (state.cat !== "all") list = list.filter(g => g.cat === state.cat);
+      if (state.level !== "all") list = list.filter(g => g.level === state.level);
+      if (state.risk !== "all") list = list.filter(g => g.risk === state.risk);
+      if (state.bm === "only") list = list.filter(g => isBookmarked(g.id));
+
+      if (state.q) {
+        list = list.filter(g => {
+          const hay = (g.title + " " + g.desc + " " + stripHTML(g.contentHTML || "") + " " + (g.checklist||[]).join(" ")).toLowerCase();
+          return hay.includes(state.q);
+        });
+      }
+
+      return list;
+    }
+
+    // ---------- Render ----------
+    function riskTagClass(risk) {
+      if (risk === "high") return "level-high";
+      if (risk === "med") return "level-med";
+      return "level-low";
+    }
+
+    function levelLabel(level) {
+      return level === "starter" ? "Starter" : level === "intermediate" ? "Intermediate" : "Advanced";
+    }
+    function catLabel(cat) {
+      const map = {
+        mfa: "🔐 MFA",
+        backup: "💾 Backup",
+        patch: "🧩 Patch",
+        phishing: "🎣 Phishing",
+        incident: "🚨 Incident",
+        logging: "🧾 Logging",
+        policy: "📜 Policy",
+        cloud: "☁️ Cloud"
+      };
+      return map[cat] || cat;
+    }
+
+    function render() {
+      const list = filterList();
+      const grid = document.getElementById('grid');
+
+      if (!list.length) {
+        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:#94a3b8; padding:2rem;">
+          😔 Таарах гарын авлага олдсонгүй. Шүүлтүүрээ өөрчлөөд үзээрэй.
+        </div>`;
+        updateKpis();
+        return;
+      }
+
+      grid.innerHTML = list.map(g => {
+        const bm = isBookmarked(g.id);
+        return `
+          <div class="card" onclick="openGuide('${g.id}')">
+            <div class="cover">
+              <div class="tag-row">
+                <span class="tag">${escapeHTML(catLabel(g.cat))}</span>
+                <span class="tag">${escapeHTML(levelLabel(g.level))}</span>
+                <span class="tag ${riskTagClass(g.risk)}">Risk: ${escapeHTML(g.risk.toUpperCase())}</span>
+                <span class="tag" style="margin-left:auto; border-color: rgba(148,163,184,0.12); background: rgba(15,23,42,0.25);">
+                  ${bm ? "⭐ Bookmarked" : "☆ Bookmark"}
+                </span>
+              </div>
+            </div>
+            <div class="content">
+              <div class="title">${escapeHTML(g.title)}</div>
+              <div class="desc">${escapeHTML(g.desc)}</div>
+              <div class="meta">
+                <span>🗓️ ${escapeHTML(g.updatedAt)}</span>
+                <span>⏱️ ${escapeHTML(g.duration)}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      updateKpis();
+    }
+
+    function updateKpis() {
+      const total = guides.length;
+      const high = guides.filter(g => g.risk === "high").length;
+      const bms = getBookmarks().length;
+      document.getElementById('kpiTotal').textContent = total;
+      document.getElementById('kpiHigh').textContent = high;
+      document.getElementById('kpiBookmarks').textContent = bms;
+    }
+
+    // ---------- Modal ----------
+    let currentGuide = null;
+
+    function openGuide(id) {
+      const g = guides.find(x => x.id === id);
+      if (!g) return;
+      currentGuide = g;
+
+      const bm = isBookmarked(g.id);
+
+      const top = `
+        <div>
+          <div class="modal-submeta">
+            <span class="pill">${escapeHTML(catLabel(g.cat))}</span>
+            <span class="pill">🎓 ${escapeHTML(levelLabel(g.level))}</span>
+            <span class="pill">🛑 Risk: ${escapeHTML(g.risk.toUpperCase())}</span>
+            <span class="pill">🗓️ ${escapeHTML(g.updatedAt)}</span>
+            <span class="pill">⏱️ ${escapeHTML(g.duration)}</span>
+          </div>
+          <h2 class="modal-title" id="mTitle" style="margin-top:0.9rem;">${escapeHTML(g.title)}</h2>
+          <div style="display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.75rem;">
+            <button class="btn btn-primary" onclick="toggleBookmark('${g.id}'); event.stopPropagation();">
+              ${bm ? "⭐ Bookmarked" : "☆ Bookmark"} 
+            </button>
+            <button class="btn" onclick="copyChecklist('${g.id}'); event.stopPropagation();">📋 Checklist copy</button>
+            <button class="btn" onclick="copySummary('${g.id}'); event.stopPropagation();">📝 Summary copy</button>
+          </div>
+        </div>
+      `;
+
+      const outcomes = (g.outcomes || []).map(x => `<li>${escapeHTML(x)}</li>`).join('');
+      const checklist = (g.checklist || []).map((x, idx) => `
+        <div class="check-item">
+          <input type="checkbox" id="ck_${idx}" />
+          <div class="txt">${escapeHTML(x)}</div>
+        </div>
+      `).join('');
+
+      const body = `
+        <div class="block">
+          <h3>🧩 Товч тайлбар</h3>
+          <p>${escapeHTML(g.desc)}</p>
+        </div>
+
+        <div class="block">
+          <h3>🎯 Хүлээгдэх үр дүн</h3>
+          <ul>${outcomes || "<li>—</li>"}</ul>
+        </div>
+
+        <div class="block">
+          <h3>📘 Дэлгэрэнгүй</h3>
+          ${g.contentHTML || "<p>—</p>"}
+        </div>
+
+        <div class="block">
+          <h3>✅ Checklist</h3>
+          <div class="checklist" id="checklistWrap">${checklist || "<p>—</p>"}</div>
+          <div class="check-actions">
+            <button class="btn btn-primary" onclick="markAll(true)">✅ Бүгдийг тэмдэглэх</button>
+            <button class="btn" onclick="markAll(false)">↩️ Цэвэрлэх</button>
+            <button class="btn" onclick="copyChecklist('${g.id}')">📋 Copy</button>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>💡 Зөвлөгөө</h3>
+          ${(g.tips||[]).map(t => `<p>• ${escapeHTML(t)}</p>`).join('') || "<p>—</p>"}
+        </div>
+      `;
+
+      document.getElementById('modalTop').innerHTML = top;
+      document.getElementById('modalBody').innerHTML = body;
+
+      document.getElementById('modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      // focus for accessibility
+      setTimeout(() => document.querySelector('.close')?.focus(), 50);
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+      currentGuide = null;
+    }
+
+    function markAll(checked) {
+      document.querySelectorAll('#checklistWrap input[type="checkbox"]').forEach(cb => cb.checked = checked);
+    }
+
+    function buildChecklistText(g) {
+      const lines = [];
+      lines.push(`✅ ${g.title}`);
+      lines.push(`Category: ${catLabel(g.cat)} | Level: ${levelLabel(g.level)} | Risk: ${g.risk.toUpperCase()}`);
+      lines.push(`Updated: ${g.updatedAt}`);
+      lines.push("");
+      (g.checklist || []).forEach((x, i) => lines.push(`${i+1}. ${x}`));
+      return lines.join("\n");
+    }
+
+    function buildSummaryText(g) {
+      const lines = [];
+      lines.push(`📝 ${g.title}`);
+      lines.push(g.desc);
+      lines.push("");
+      lines.push("🎯 Outcomes:");
+      (g.outcomes || []).forEach(x => lines.push(`- ${x}`));
+      lines.push("");
+      lines.push("💡 Tips:");
+      (g.tips || []).forEach(x => lines.push(`- ${x}`));
+      return lines.join("\n");
+    }
+
+    async function copyToClipboard(text) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          toast("Хуулагдлаа!");
+          return;
+        }
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        ta.style.top = '-9999px';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        toast("Хуулагдлаа!");
+      } catch (e) {
+        console.error(e);
+        toast("Хуулах боломжгүй");
+      }
+    }
+
+    function copyChecklist(id) {
+      const g = guides.find(x => x.id === id);
+      if (!g) return;
+      copyToClipboard(buildChecklistText(g));
+    }
+
+    function copySummary(id) {
+      const g = guides.find(x => x.id === id);
+      if (!g) return;
+      copyToClipboard(buildSummaryText(g));
+    }
+
+    function openBookmarks() {
+      setChip('bm', 'only');
+      scrollToFilters();
+      toast("Bookmarked гарын авлагууд");
+    }
+
+    // ---------- Events ----------
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'Enter' && document.activeElement?.id === 'q') applySearch();
+    });
+
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target?.id === 'modal') closeModal();
+    });
+
+    // ---------- Init ----------
+    function init() {
+      // set default chip actives
+      setChip('cat','all');
+      setChip('level','all');
+      setChip('risk','all');
+      setChip('bm','all');
+      updateKpis();
+      render();
+    }
+    init();
+  </script>
 </body>
 </html>
-
